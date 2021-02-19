@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+        // сделал чтобы можно было поработать с методами.
         Scanner input = new Scanner(System.in);
         System.out.println("Введите четыре числа: ");
         float num1 = input.nextFloat();
@@ -29,10 +30,7 @@ public class Main {
         int inputYear = input.nextInt();
         leapYearOrNonLeapYear(inputYear);
         input.close();
-
-
     }
-
     private static float calculateNumbers(float a, float b, float c, float d) {
         return a * (b + (c / d));
     }
