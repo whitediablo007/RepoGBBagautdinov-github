@@ -31,6 +31,7 @@ public class Main {
         leapYearOrNonLeapYear(inputYear);
         input.close();
     }
+
     private static float calculateNumbers(float a, float b, float c, float d) {
         return a * (b + (c / d));
     }
@@ -57,7 +58,7 @@ public class Main {
     }
 
     private static void leapYearOrNonLeapYear(int inputYear) {
-        if ((inputYear % 4 == 0 && inputYear % 400 == 0) || inputYear % 100 == 0) {
+        if (inputYear % 4 == 0 || (inputYear % 400 == 0 && inputYear % 100 == 0)) {
             System.out.println("Год " + inputYear + " високосный.");
         } else {
             System.out.println("Год " + inputYear + " не високосный.");
