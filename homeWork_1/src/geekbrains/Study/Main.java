@@ -59,7 +59,7 @@ public class Main {
     }
 
     private static void leapYearOrNonLeapYear(int inputYear) {
-        if ((inputYear % 4 == 0 && inputYear % 400 == 0) || inputYear % 100 == 0) {
+        if (inputYear % 4 == 0 || (inputYear % 400 == 0 && inputYear % 100 == 0)) {
             System.out.println("Год " + inputYear + " високосный.");
         } else {
             System.out.println("Год " + inputYear + " не високосный.");
