@@ -43,7 +43,7 @@ public class Main {
     }
 
     private static void positiveOrNegative(int inputNumber) {
-        if (inputNumber > 0) {
+        if (inputNumber >= 0) {
             System.out.println("Вы ввели положительное число.");
         } else {
             System.out.println("Вы ввели отрицательное число.");
