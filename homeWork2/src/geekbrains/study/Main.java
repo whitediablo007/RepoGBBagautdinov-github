@@ -14,6 +14,7 @@ public class Main {
         System.out.println("Введите количествол элементов массива равное 8: ");
         int inputNum_1 = input.nextInt();
         arrayStuff(inputNum_1);
+
         System.out.println("Введите количествол элементов массива: ");
         int inputNum_2 = input.nextInt();
         System.out.println("Сгенерирован массив с " + inputNum_2 + " элементами: ");
