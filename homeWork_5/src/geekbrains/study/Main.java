@@ -6,6 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+
         Employees[] employees = new Employees[5];
         employees[0] = new Employees("Ivanov", "Ivan", "Ivanovich",
                 "Director", "ivanov@mailbox.com", 250000, 50);
