@@ -5,46 +5,61 @@ import java.util.Scanner;
 
 public class Main {
     public static char[][] map;
-    public static final int SIZE_Y = 5;
-    public static final int SIZE_X = 5;
+    public static final int SIZE_Y = 3;
+    public static final int SIZE_X = 3;
     public static final int DOTS_TO_WIN = 3;
     public static final char DOT_EMPTY = '*';
     public static final char DOT_X = 'X';
     public static final char DOT_0 = '0';
     public static final String SPACE = "|";
+    public static int CHANGE_DIFFICULT;
 
     public static Scanner sc = new Scanner(System.in);
     public static Random random = new Random();
 
     public static void main(String[] args) {
-        initMap();
-        printMap();
+        platyGame();
+    }
 
-        while (true) {
-            humanTurn();
+    public static void platyGame() {
+        do {
+            System.out.println("Выберите сложность игры: \n [1] - Простая \n \n [2] - ИГРА СО СВЕРХРАЗУМОМ\n");
+            CHANGE_DIFFICULT = sc.nextInt();
+            initMap();
             printMap();
+            while (true) {
+                humanTurn();
+                printMap();
 
-            if (checkWin(DOT_X)) {
-                System.out.println("Вы победили!");
-                break;
-            }
-            if (isMapFull()) {
-                System.out.println("Ничья");
-                break;
-            }
-            aiTurn();
-            printMap();
+                if (checkWin(DOT_X)) {
+                    System.out.println("Вы победили!");
+                    break;
+                }
+                if (isMapFull()) {
+                    System.out.println("Ничья");
+                    break;
+                }
 
-            if (checkWin(DOT_0)) {
-                System.out.println("Победил СВЕРХРАЗУМ!");
-                break;
+
+                if (CHANGE_DIFFICULT != 1) aiTurn();
+                else aiTurnPast();
+                printMap();
+
+                if (checkWin(DOT_0)) {
+                    System.out.println("Победил СВЕРХРАЗУМ!");
+                    break;
+                }
+                if (isMapFull()) {
+                    System.out.println("Ничья");
+                    break;
+                }
             }
-            if (isMapFull()) {
-                System.out.println("Ничья");
-                break;
-            }
-        }
-        System.out.println("Игра закончена!");
+            System.out.println("---------------------------------");
+            System.out.print("Хотите ли сыграть снова? (y/n) -> ");
+
+        } while (sc.next().equals("y"));
+        sc.close();
+
     }
 
     public static void setSymbol(int y, int x, char symbol) {
@@ -63,24 +78,65 @@ public class Main {
     }
 
     public static boolean checkWin(char dot) {
-        if (map[0][0] == dot && map[0][1] == dot && map[0][2] == dot) return true;
-        if (map[1][0] == dot && map[1][1] == dot && map[1][2] == dot) return true;
-        if (map[2][0] == dot && map[2][1] == dot && map[2][2] == dot) return true;
-        if (map[0][0] == dot && map[1][0] == dot && map[2][0] == dot) return true;
-        if (map[0][1] == dot && map[1][1] == dot && map[2][1] == dot) return true;
-        if (map[0][2] == dot && map[1][2] == dot && map[2][2] == dot) return true;
-        if (map[0][0] == dot && map[1][1] == dot && map[2][2] == dot) return true;
-        return map[2][0] == dot && map[1][1] == dot && map[0][2] == dot;
+        for (int i = 0; i < SIZE_Y; i++) {
+            for (int j = 0; j < SIZE_X; j++) {
+                if (verifyLine(i, j, 0, 1, dot)) return true;
+                if (verifyLine(i, j, 1, 1, dot)) return true;
+                if (verifyLine(i, j, 1, 0, dot)) return true;
+                if (verifyLine(i, j, -1, 1, dot)) return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean verifyLine(int indexY, int indexX, int freezeOrRunY, int freezeOrRunX, char symbol) {
+        int wayY = indexY + (DOTS_TO_WIN - 1) * freezeOrRunY;
+        int wayX = indexX + (DOTS_TO_WIN - 1) * freezeOrRunX;
+        if (wayX < 0 || wayY < 0 || wayX > SIZE_X - 1 || wayY > SIZE_Y - 1) return false;
+        for (int i = 0; i < DOTS_TO_WIN; i++) {
+            int elementY = indexY + i * freezeOrRunY;
+            int elementX = indexX + i * freezeOrRunX;
+            if (map[elementY][elementX] != symbol) return false;
+        }
+        return true;
     }
 
     public static void aiTurn() {
-        int x, y;
-
+        for (int i = 0; i < SIZE_Y; i++)
+            for (int j = 0; j < SIZE_X; j++) {
+                if (isCellValid(i, j)) {
+                    setSymbol(i, j, DOT_0);
+                    if (checkWin(DOT_0)) return;
+                    setSymbol(i, j, DOT_EMPTY);
+                }
+            }
+        for (int i = 0; i < SIZE_Y; i++)
+            for (int j = 0; j < SIZE_X; j++) {
+                if (isCellValid(i, j)) {
+                    setSymbol(i, j, DOT_X);
+                    if (checkWin(DOT_X)) {
+                        setSymbol(i, j, DOT_0);
+                        return;
+                    }
+                    setSymbol(i, j, DOT_EMPTY);
+                }
+            }
+        int x;
+        int y;
         do {
             x = random.nextInt(SIZE_X);
             y = random.nextInt(SIZE_Y);
-        } while (isCellValid(x, y));
-        System.out.println("Компьютер сделал ход в точку " + "[" + (x + 1) + "]" + " " + "[" + (y + 1) + "]");
+        } while (!isCellValid(y, x));
+        setSymbol(y, x, DOT_0);
+    }
+
+    public static void aiTurnPast() {
+        int x;
+        int y;
+        do {
+            x = random.nextInt(SIZE_X);
+            y = random.nextInt(SIZE_Y);
+        } while (!isCellValid(y, x));
         setSymbol(y, x, DOT_0);
     }
 
@@ -90,21 +146,15 @@ public class Main {
             System.out.println("Введите координаты X (от 1 до " + SIZE_X + ")   Y  (от 1 до " + SIZE_Y + ")");
             x = sc.nextInt() - 1;
             y = sc.nextInt() - 1;
-        } while (isCellValid(x, y));
+        } while (!isCellValid(y, x));
         setSymbol(y, x, DOT_X);
     }
 
-    public static boolean isCellValid(int x, int y) {
-        if (x < 0 || x >= SIZE_X || y < 0 || y >= SIZE_Y) {
-            System.out.println("Вы ввели некорректную точку.");
-            return true;
+    public static boolean isCellValid(int y, int x) {
+        if (x < 0 || y < 0 || x > SIZE_X - 1 || y > SIZE_Y - 1) {
+            return false;
         }
-        if (map[y][x] == DOT_0 || map[y][x] == DOT_X) {
-            System.out.println("Эта точка занята!!!");
-            return true;
-        }
-        if (map[y][x] == DOT_EMPTY) return false;
-        return true;
+        return map[y][x] == DOT_EMPTY;
     }
 
     public static void initMap() {
@@ -114,7 +164,6 @@ public class Main {
                 map[i][j] = DOT_EMPTY;
             }
         }
-
     }
 
     public static void printMap() {
@@ -131,5 +180,4 @@ public class Main {
         }
         System.out.println();
     }
-
 }
