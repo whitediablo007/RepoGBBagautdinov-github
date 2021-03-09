@@ -13,6 +13,7 @@ public class Main {
     public static final char DOT_0 = '0';
     public static final String SPACE = "|";
 
+
     public static Scanner sc = new Scanner(System.in);
     public static Random random = new Random();
 
