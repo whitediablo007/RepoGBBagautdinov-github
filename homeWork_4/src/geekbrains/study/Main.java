@@ -5,9 +5,9 @@ import java.util.Scanner;
 
 public class Main {
     public static char[][] map;
-    public static final int SIZE_Y = 5;
-    public static final int SIZE_X = 5;
-    public static final int DOTS_TO_WIN = 4;
+    public static final int SIZE_Y = 3;
+    public static final int SIZE_X = 3;
+    public static final int DOTS_TO_WIN = 3;
     public static final char DOT_EMPTY = '*';
     public static final char DOT_X = 'X';
     public static final char DOT_0 = '0';
