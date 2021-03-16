@@ -15,7 +15,7 @@ public class Dog extends Animal {
     @Override
     public void swim(int length) {
         if (length < 0) {
-            System.out.println(getName() + " не может бегать отрицательное количество метров");
+            System.out.println(getName() + " не может плыть отрицательное количество метров");
         } else if ((length > 0) && length <= MAX_LENGTH_SWIM) {
             System.out.println(getName() + " проплыл " + length + " метров.");
         }

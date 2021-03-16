@@ -18,11 +18,11 @@ public abstract class Animal {
 
     public void run(int length) {
         if (length < 0) {
-            System.out.println(getName() + " не может бегать отрицательное количество метров");
+            System.out.println(name + " не может бегать отрицательное количество метров");
         } else if ((length > 0) && length <= getMAX_RUN()) {
-            System.out.println(getName() + " пробежал " + length + " метров.");
+            System.out.println(name + " пробежал " + length + " метров.");
         } else {
-            System.out.println(getName() + " не может бегать больше " + getMAX_RUN() + " метров.");
+            System.out.println(name + " не может бегать больше " + getMAX_RUN() + " метров.");
         }
     }
 
