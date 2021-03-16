@@ -4,8 +4,12 @@ package geekbrains.study.allAnimals;
 public class Cat extends Animal {
     private final int MAX_LENGTH_RUN = 200;
 
+    private static int catCounter = 0;
+
     public Cat(String name, String color, int age) {
         super(name, color, age);
+
+        catCounter++;
     }
 
     @Override
@@ -18,8 +22,7 @@ public class Cat extends Animal {
         return MAX_LENGTH_RUN;
     }
 
-    public int catCounter(int counter){
-        counter++;
-        return counter;
+    public static int getCatCounter() {
+        return catCounter;
     }
 }

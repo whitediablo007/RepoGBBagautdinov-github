@@ -4,8 +4,12 @@ public class Dog extends Animal {
     private final int MAX_LENGTH_RUN = 500;
     private final int MAX_LENGTH_SWIM = 10;
 
+    private static int dogCounter = 0;
+
     public Dog(String name, String color, int age) {
         super(name, color, age);
+
+        dogCounter++;
     }
 
     @Override
@@ -20,6 +24,10 @@ public class Dog extends Animal {
     @Override
     int getMAX_RUN() {
         return MAX_LENGTH_RUN;
+    }
+
+    public static int getDogCounter() {
+        return dogCounter;
     }
 }
 

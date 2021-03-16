@@ -6,10 +6,14 @@ public abstract class Animal {
     private String color;
     private int age;
 
+    private static int counter = 0;
+
     Animal(String name, String color, int age) {
         this.name = name;
         this.color = color;
         this.age = age;
+
+        counter++;
     }
 
     public void run(int length) {
@@ -29,4 +33,8 @@ public abstract class Animal {
     }
 
     abstract int getMAX_RUN();
+
+    public static int getCounter() {
+        return counter;
+    }
 }
