@@ -13,6 +13,7 @@ public class Main {
         Cat cat1 = new Cat("Oro", "Red", 6);
 
         cat.swim(200);
+
         dog.swim(5);
 
         cat.run(20);
