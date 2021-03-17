@@ -15,7 +15,7 @@ public class Main {
         cat.swim(200);
         dog.swim(5);
 
-        cat.run(-1);
+        cat.run(20);
         dog.run(-2);
 
         System.out.println("Создано " + Animal.getCounter() + " животных.");

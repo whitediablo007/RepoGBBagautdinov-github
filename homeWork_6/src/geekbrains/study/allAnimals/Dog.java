@@ -22,7 +22,7 @@ public class Dog extends Animal {
     }
 
     @Override
-    int getMAX_RUN() {
+    int getMaxRun() {
         return MAX_LENGTH_RUN;
     }
 

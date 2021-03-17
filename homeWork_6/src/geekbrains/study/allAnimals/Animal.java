@@ -19,10 +19,10 @@ public abstract class Animal {
     public void run(int length) {
         if (length < 0) {
             System.out.println(name + " не может бегать отрицательное количество метров");
-        } else if ((length > 0) && length <= getMAX_RUN()) {
+        } else if ((length > 0) && length <= getMaxRun()) {
             System.out.println(name + " пробежал " + length + " метров.");
         } else {
-            System.out.println(name + " не может бегать больше " + getMAX_RUN() + " метров.");
+            System.out.println(name + " не может бегать больше " + getMaxRun() + " метров.");
         }
     }
 
@@ -32,7 +32,7 @@ public abstract class Animal {
         return name;
     }
 
-    abstract int getMAX_RUN();
+    abstract int getMaxRun();
 
     public static int getCounter() {
         return counter;
