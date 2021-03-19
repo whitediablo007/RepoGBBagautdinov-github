@@ -5,6 +5,7 @@ import geekbrains.study.food.Plate;
 
 public class Main {
 
+
     public static void main(String[] args) {
         Cat[] cats = {
                 new Cat("Барсик", 35),
