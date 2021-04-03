@@ -33,8 +33,8 @@ public class MainWindow extends JFrame {
         DialogFrame dialogFrame= new DialogFrame(this);
 
 
-        int mapSize = dialogFrame.mapSize;
-        playerType = dialogFrame.playerType;
+        int mapSize = dialogFrame.getMapSize();
+        playerType = dialogFrame.getPlayerType();
 
         gameService = new GameServiceImpl(mapSize,playerType);
 
@@ -74,16 +74,13 @@ public class MainWindow extends JFrame {
     }
 
     private ActionListener getButtonListener() {
-        return new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doHumanTurn((JButton) e.getSource());
+        return e -> {
+            doHumanTurn((JButton) e.getSource());
 
-                if (isGameContinue(playerType)) {
-                    doAiTurn();
-                } else {
-                    disableAllButtons();
-                }
+            if (isGameContinue(playerType)) {
+                doAiTurn();
+            } else {
+                disableAllButtons();
             }
         };
     }
