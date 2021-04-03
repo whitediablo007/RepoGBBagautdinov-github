@@ -1,5 +1,6 @@
 package geekbrains.study;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -106,7 +107,9 @@ public class Main {
             for (int j = 0; j < SIZE_X; j++) {
                 if (isCellValid(i, j)) {
                     setSymbol(i, j, DOT_0);
-                    if (checkWin(DOT_0)) return;
+                    if (checkWin(DOT_0)) {
+                        return;
+                    }
                     setSymbol(i, j, DOT_EMPTY);
                 }
             }
