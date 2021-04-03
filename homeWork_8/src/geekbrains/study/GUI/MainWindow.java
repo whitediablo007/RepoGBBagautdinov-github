@@ -3,6 +3,7 @@ package geekbrains.study.GUI;
 import geekbrains.study.GUI.component.StatusBar;
 import geekbrains.study.core.GameService;
 import geekbrains.study.core.domain.MatrixCoordinate;
+import geekbrains.study.core.impl.GameServiceImpl;
 import geekbrains.study.enums.DotType;
 import geekbrains.study.factory.GameFactory;
 
@@ -28,11 +29,14 @@ public class MainWindow extends JFrame {
         StatusBar statusBar = new StatusBar();
         statusBar.setMessage("Ожидание хода игрока");
 
+        HelloFrame helloFrame = new HelloFrame(this);
+        DialogFrame dialogFrame= new DialogFrame(this);
 
 
-        int mapSize = 3;
-        playerType = DotType.X;
-        gameService = GameFactory.getGameService(mapSize,playerType);
+        int mapSize = dialogFrame.mapSize;
+        playerType = dialogFrame.playerType;
+
+        gameService = new GameServiceImpl(mapSize,playerType);
 
         JPanel gridPanel = createGridButtons(mapSize);
 
