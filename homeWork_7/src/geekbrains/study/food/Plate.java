@@ -3,7 +3,7 @@ package geekbrains.study.food;
 public class Plate {
     private int amountOfFood;
 
-    private int REFILL = 100;
+    private final int REFILL = 100;
 
     public Plate(int amountOfFood) {
         this.amountOfFood = amountOfFood;
