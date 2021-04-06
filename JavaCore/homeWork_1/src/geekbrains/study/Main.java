@@ -14,7 +14,7 @@ public class Main {
                 new Robot("R2D2", 150, 4)};
 
         Track track = new Track(160);
-        Wall wall = new Wall(2);
+        Wall wall = new Wall(3);
 
         for(Object o : participants){
             System.out.println(o);
