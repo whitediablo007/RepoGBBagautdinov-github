@@ -29,11 +29,6 @@ public class Cat implements Runnable, Bouncy {
     }
 
     @Override
-    public int getHeightOfJump() {
-        return jumpHeight;
-    }
-
-    @Override
     public boolean run(int distance) {
         System.out.println("Кот " + name + " оценил возможность бега");
         if (distance <= runDistance) {
@@ -45,10 +40,5 @@ public class Cat implements Runnable, Bouncy {
 
             return false;
         }
-    }
-
-    @Override
-    public int getDistanceOfRun() {
-        return runDistance;
     }
 }
