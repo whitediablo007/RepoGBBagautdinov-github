@@ -18,7 +18,7 @@ public class Robot implements Runnable, Bouncy {
     public boolean jump(int height) {
         System.out.println("Робот " + name + " оценивает возможности прыжка.");
         if (height <= jumpHeight) {
-            System.out.println("Робот " + name + " перепрыгнул стену " + height);
+            System.out.println("Робот " + name + " перепрыгнул стену " + height + " метра(ов)!");
 
             return true;
         } else {
@@ -32,11 +32,11 @@ public class Robot implements Runnable, Bouncy {
     public boolean run(int distance) {
         System.out.println("Робот " + name + " оценил возможность бега");
         if (distance <= runDistance) {
-            System.out.println("Робот " + name + " пробежал " + distance);
+            System.out.println("Робот " + name + " пробежал " + distance + " метра(ов)!");
 
             return true;
         } else {
-            System.out.println(name + " не может бегать на расстояние " + distance + " метра (ов)!");
+            System.out.println(name + " не может бегать на расстояние " + distance + " метра(ов)!");
 
             return false;
         }
