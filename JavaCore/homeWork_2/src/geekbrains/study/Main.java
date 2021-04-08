@@ -7,8 +7,8 @@ public class Main {
     public static void main(String[] args) {
 
         //String string = "1 2 3 4\n5 6 7 8\n9 10 11 12\n13 14 15 16";
-        String string = "1 2 3\n4 5 6\n7 8 9\n10 11 12";
-        //String string = "1 1 2 3\n4 d 6 7\n8 9 10 11\n12 13 14 15";
+        //String string = "1 2 3\n4 5 6\n7 8 9\n10 11 12";
+        String string = "1 1 2 3\n4 d 6 7\n8 9 10 11\n12 13 14 15";
 
         String[][] stringArray = convertStringToArray(string);
         System.out.println(sumOfElements(stringArray));
@@ -40,10 +40,12 @@ public class Main {
             if (buffer.charAt(indexCounter) == ' ') {
                 spaceCounter++;
             }
-            if (buffer.charAt(indexCounter) == '\n' && spaceCounter == SPACE_NUMBER) {
-                spaceCounter = 0;
-            } else {
-                throw new MyArraySizeException("Несоответсвие размера матрицы 4x4");
+            if (buffer.charAt(indexCounter) == '\n') {
+                if (spaceCounter == SPACE_NUMBER) {
+                    spaceCounter = 0;
+                } else {
+                    throw new MyArraySizeException("Несоответсвие размера матрицы 4x4");
+                }
             }
             indexCounter++;
         }
