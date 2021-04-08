@@ -7,25 +7,25 @@ public class Main {
 
     public static void main(String[] args) {
 
+////        String[][] stringArray = {
+////                {"1", "2", "3", "4"},
+////                {"5", "6", "7", "8"},
+////                {"9", "10", "11", "12"},
+////                {"13", "14", "15", "16"}
+////        };
+//
 //        String[][] stringArray = {
-//                {"1", "2", "3", "4"},
-//                {"5", "6", "7", "8"},
-//                {"9", "10", "11", "12"},
-//                {"13", "14", "15", "16"}
+//                {"1", "2", "3"},
+//                {"5", "6", "7",},
+//                {"9", "10", "11",}
 //        };
 
         String[][] stringArray = {
-                {"1", "2", "3"},
-                {"5", "6", "7",},
-                {"9", "10", "11",}
+                {"1", "2", "3", "4"},
+                {"5", "D", "7", "8"},
+                {"9", "10", "11", "12"},
+                {"13", "14", "15", "16"}
         };
-
-//        String[][] stringArray = {
-//                {"1", "2", "3", "4"},
-//                {"5", "D", "7", "8"},
-//                {"9", "10", "11", "12"},
-//                {"13", "14", "15", "16"}
-//        };
 
         System.out.println(sumOfElements(stringArray));
     }
@@ -35,11 +35,10 @@ public class Main {
             for (int j = 0; j < strings.length; j++) {
                 if (string.length < ROW_INDEX && string[j].length < COLUMN_INDEX) {
                     throw new MyArraySizeException("Несоответсвие размера матрицы 4x4");
-                } else {
-                    System.out.println("Размер матрицы 4х4");
                 }
             }
         }
+        System.out.println("Размер матрицы 4х4");
     }
 
 
