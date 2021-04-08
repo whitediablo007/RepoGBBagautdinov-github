@@ -56,15 +56,14 @@ public class Main {
         int sum = 0;
 
         for (int i = 0, sLength = string.length; i < sLength; i++) {
-            String[] s1 = string[i];
-            for (int j = 0, s1Length = s1.length; j < s1Length; j++) {
-                String s2 = s1[j];
+            String[] row1 = string[i];
+            for (int j = 0, s1Length = row1.length; j < s1Length; j++) {
+                String row2 = row1[j];
                 try {
-                    sum += Integer.parseInt(s2);
+                    sum += Integer.parseInt(row2);
                 } catch (NumberFormatException e) {
-                    System.out.println("В строке " + i + "," + " столбце " + j + " матрицы, лежит нечисловое значение.");
-                    e.printStackTrace();
-                    System.exit(0);
+                    throw new MyArrayDataException("В строке " + i + ","
+                            + " столбце " + j + " матрицы, лежит нечисловое значение.");
                 }
             }
         }
