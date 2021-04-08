@@ -3,6 +3,7 @@ package geekbrains.study;
 public class Main {
 
     private static final int ROW_INDEX = 4;
+    private static final int COLUMN_INDEX = 4;
 
     public static void main(String[] args) {
 
@@ -30,10 +31,14 @@ public class Main {
     }
 
     private static void checkArraySizeException(String[][] string) {
-        if (string.length < ROW_INDEX) {
-            throw new MyArraySizeException("Несоответсвие размера матрицы 4x4");
-        } else {
-            System.out.println("Размер матрицы 4х4");
+        for (String[] strings : string) {
+            for (int j = 0; j < strings.length; j++) {
+                if (string.length < ROW_INDEX && string[j].length < COLUMN_INDEX) {
+                    throw new MyArraySizeException("Несоответсвие размера матрицы 4x4");
+                } else {
+                    System.out.println("Размер матрицы 4х4");
+                }
+            }
         }
     }
 
