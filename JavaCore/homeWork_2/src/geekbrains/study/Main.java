@@ -38,7 +38,6 @@ public class Main {
                 }
             }
         }
-        System.out.println("Размер матрицы 4х4");
     }
 
 
@@ -54,8 +53,8 @@ public class Main {
                 try {
                     sum += Integer.parseInt(row2);
                 } catch (NumberFormatException e) {
-                    throw new MyArrayDataException("В строке " + i + ","
-                            + " столбце " + j + " матрицы, лежит нечисловое значение.");
+                    throw new MyArrayDataException("В строке " + (i+1) + ","
+                            + " столбце " + (j+1) + " матрицы, лежит нечисловое значение.");
                 }
             }
         }
