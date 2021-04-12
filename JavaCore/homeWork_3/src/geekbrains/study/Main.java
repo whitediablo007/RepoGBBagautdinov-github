@@ -46,7 +46,7 @@ public class Main {
         }
         System.out.println(hashMap);
         System.out.println("В массиве " + strings.length + " слова " +
-                hashMap.size() + " неповторяющихся слов");
+                hashMap.size() + " неповторяющихся слов.");
     }
 
     static void newPhoneBook() {
