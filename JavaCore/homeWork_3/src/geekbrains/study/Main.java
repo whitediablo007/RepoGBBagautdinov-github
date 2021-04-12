@@ -15,6 +15,8 @@ public class Main {
         System.out.println(Arrays.toString(getStringArray()));
         System.out.println("-------------------------------------------------");
         wordCounter(getStringArray());
+        System.out.println("-------------------------------------------------");
+        newPhoneBook();
     }
 
     private static String[] getStringArray() {
@@ -46,5 +48,17 @@ public class Main {
         System.out.println("В массиве " + strings.length + " слова " +
                 hashMap.size() + " неповторяющихся слов");
     }
-    // Допиливаю...
+
+    static void newPhoneBook() {
+        PhoneBook phoneBook = new PhoneBook();
+        phoneBook.add("Марков", "5533");
+        phoneBook.add("Антонов", "5534");
+        phoneBook.add("Иванов", "5535");
+        phoneBook.add("Ильин", "5536");
+        phoneBook.add("Иванов", "5537");
+        phoneBook.add("Иванов", "5538");
+
+        System.out.println("Номера Иванова: " + phoneBook.get("Иванов"));
+        System.out.println(phoneBook);
+    }
 }
