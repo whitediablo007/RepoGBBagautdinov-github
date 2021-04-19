@@ -9,7 +9,9 @@ public class Main {
 
 
     public static void main(String[] args) {
+        System.out.println("Работает один поток:");
         calculateWithoutThreads(getArray());
+        System.out.println("Работает два потока:");
         calculateWithTwoThreads(getArray());
     }
 
@@ -22,8 +24,8 @@ public class Main {
                     Math.cos(0.2f + i / 5f) *
                     Math.cos(0.4f + i / 2f));
         }
-        System.out.println("Массив заполнен за: " +
-                (System.currentTimeMillis() - currentTime) / 1000f + " секунд, в одном потоке.");
+        System.err.println("Массив заполнен за: " +
+                (System.currentTimeMillis() - currentTime) / 1000f + " секунд.");
     }
 
     public static float[] getArray() {
@@ -57,8 +59,8 @@ public class Main {
         System.arraycopy(arrayOne, 0, array, 0, HALF_SIZE);
         System.arraycopy(arrayTwo, 0, array, HALF_SIZE, HALF_SIZE);
 
-        System.out.println("Массив заполнен за: " +
-                (System.currentTimeMillis() - currentTime) / 1000f + " секунд, в двух потоках.");
+        System.err.println("Массив заполнен за: " +
+                (System.currentTimeMillis() - currentTime) / 1000f + " секунд.");
 
     }
 
