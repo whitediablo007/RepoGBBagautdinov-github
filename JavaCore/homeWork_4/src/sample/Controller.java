@@ -21,7 +21,7 @@ public class Controller {
     }
 
     public void keyPress(KeyEvent keyEvent) {
-        if (keyEvent.getCode() == KeyCode.ENTER) {
+        if (keyEvent.getCode() == KeyCode.ENTER && !textField.getText().equals("")) {
             textImport();
         }
     }
