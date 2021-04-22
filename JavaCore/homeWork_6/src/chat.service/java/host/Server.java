@@ -5,28 +5,41 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Server {
-
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
         Socket socket;
         try (ServerSocket serverSocket = new ServerSocket(8112)) {
             socket = serverSocket.accept();
 
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+            DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+            DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 
-            while (true) {
-                String str = in.readUTF();
-                out.writeUTF(str);
-
-                if (str.equals("/end")) {
-                    System.exit(0);
-                    break;
+            new Thread(() -> {
+                try {
+                    while (true) {
+                        String string = inputStream.readUTF();
+                        System.out.println(string);
+                    }
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
+            }).start();
+            try {
+
+                while (true) {
+                    Scanner scanner = new Scanner(System.in);
+                    String message = scanner.nextLine();
+                    outputStream.writeUTF(message);
+                }
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
+

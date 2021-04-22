@@ -26,18 +26,18 @@ public class ChatController {
     private TextArea textArea;
 
     @FXML
-    private void initialize() throws IOException{
+    private void initialize() throws IOException {
         try {
             openConnection();
             addCloseListener();
-        }catch (IOException exception){
+        } catch (IOException exception) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Ошибка подключения");
             alert.setHeaderText("Сервер не найден!");
             alert.setContentText("Вначале запустите сервер");
             alert.showAndWait();
             exception.printStackTrace();
-            throw  exception;
+            throw exception;
         }
     }
 
@@ -64,6 +64,8 @@ public class ChatController {
             }
         }).start();
     }
+
+
 
     private void addCloseListener() {
         EventHandler<WindowEvent> onCloseRequest = Main.mainStage.getOnCloseRequest();
