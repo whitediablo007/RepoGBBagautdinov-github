@@ -3,7 +3,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.geometry.Insets?>
-<VBox fx:controller="client.ChatController" xmlns:fx="http://javafx.com/fxml">
+<VBox fx:controller="ChatController" xmlns:fx="http://javafx.com/fxml">
     <TextArea fx:id="textArea" VBox.vgrow="ALWAYS" prefHeight="500"
               editable="false" wrapText="true" focusTraversable="false"/>
     <padding>
