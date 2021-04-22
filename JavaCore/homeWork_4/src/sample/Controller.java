@@ -14,18 +14,21 @@ public class Controller {
     @FXML
     private TextArea textArea;
 
+    @FXML
     public void clickSend() {
         if (!textField.getText().equals("")) {
             textImport();
         }
     }
 
+    @FXML
     public void keyPress(KeyEvent keyEvent) {
         if (keyEvent.getCode() == KeyCode.ENTER && !textField.getText().equals("")) {
             textImport();
         }
     }
 
+    @FXML
     private void textImport() {
         textArea.appendText(textField.getText() + "\n");
         textField.clear();
