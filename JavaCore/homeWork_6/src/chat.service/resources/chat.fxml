@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox fx:controller="client.ChatController" xmlns:fx="http://javafx.com/fxml">
+    <TextArea fx:id="textArea" VBox.vgrow="ALWAYS" prefHeight="500"
+              editable="false" wrapText="true" focusTraversable="false"/>
+    <padding>
+        <Insets bottom="5.0" left="5.0" top="5.0" right="5.0"/>
+    </padding>
+    <HBox spacing="5.0">
+        <TextField fx:id="textField" promptText="Введите сообщение" HBox.hgrow="ALWAYS" onKeyReleased="#keyPress"/>
+        <Button text="Отправить" HBox.hgrow="ALWAYS" onAction="#clickSend"/>
+        <padding>
+            <Insets top="5.0"/>
+        </padding>
+    </HBox>
+</VBox>
