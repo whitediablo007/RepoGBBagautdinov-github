@@ -31,14 +31,18 @@ public class ChatController {
             openConnection();
             addCloseListener();
         } catch (IOException exception) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Ошибка подключения");
-            alert.setHeaderText("Сервер не найден!");
-            alert.setContentText("Вначале запустите сервер");
-            alert.showAndWait();
+            connectionAlertWindow();
             exception.printStackTrace();
             throw exception;
         }
+    }
+
+    private void connectionAlertWindow() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Ошибка подключения");
+        alert.setHeaderText("Сервер не найден!");
+        alert.setContentText("Вначале запустите сервер");
+        alert.showAndWait();
     }
 
     private void openConnection() throws IOException {
@@ -46,17 +50,17 @@ public class ChatController {
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
 
+        addNewThread();
+    }
+
+    private void addNewThread() {
         new Thread(() -> {
             try {
                 while (readyOfRead) {
                     System.out.println("Готовы считывать");
                     String strFromServer = inputStream.readUTF();
                     System.out.println("Считал " + strFromServer);
-                    if (strFromServer.equalsIgnoreCase("/end")) {
-                        System.out.println("Сервер остановлен");
-                        System.exit(0);
-                        break;
-                    }
+                    if (exitCondition(strFromServer)) break;
                     textArea.setText(textArea.getText() + "Сервер: " + strFromServer + "\n");
                 }
             } catch (Exception exception) {
@@ -65,6 +69,14 @@ public class ChatController {
         }).start();
     }
 
+    private boolean exitCondition(String strFromServer) {
+        if (strFromServer.equalsIgnoreCase("/end")) {
+            System.out.println("Сервер остановлен");
+            System.exit(0);
+            return true;
+        }
+        return false;
+    }
 
 
     private void addCloseListener() {
@@ -112,11 +124,15 @@ public class ChatController {
             textField.requestFocus();
         } catch (IOException exception) {
             exception.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Ошибка отправки сообщения");
-            alert.setHeaderText("Ошибка отправки сообщения");
-            alert.setContentText("При отправке сообщения возникла ошибка: " + exception.getMessage());
-            alert.show();
+            sendMessageAlertWindow(exception);
         }
+    }
+
+    private void sendMessageAlertWindow(IOException exception) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Ошибка отправки сообщения");
+        alert.setHeaderText("Ошибка отправки сообщения");
+        alert.setContentText("При отправке сообщения возникла ошибка: " + exception.getMessage());
+        alert.show();
     }
 }
