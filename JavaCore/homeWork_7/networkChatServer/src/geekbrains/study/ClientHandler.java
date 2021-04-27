@@ -88,7 +88,8 @@ public class ClientHandler {
                 return;
             }
             if (strFromClient.startsWith("/w")) {
-                server.privateMsg(name + ": " + strFromClient);
+                String[] elements = strFromClient.split("\\s+", 3);
+                server.privateMsg(this, elements[1], elements[2]);
             } else
                 server.broadcastMsg(name + ": " + strFromClient);
         }
