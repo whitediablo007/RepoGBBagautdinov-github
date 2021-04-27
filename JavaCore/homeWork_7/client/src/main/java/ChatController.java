@@ -117,7 +117,7 @@ public class ChatController {
 
     @FXML
     private void textImport() {
-        //textArea.appendText("Я: " + textField.getText().trim() + "\n");
+        textArea.appendText("Я: " + textField.getText().trim() + "\n");
         try {
             outputStream.writeUTF(textField.getText().trim());
             textField.clear();

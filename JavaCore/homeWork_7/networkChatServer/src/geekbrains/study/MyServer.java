@@ -3,8 +3,7 @@ package geekbrains.study;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class MyServer {
     private static MyServer server;
@@ -38,7 +37,7 @@ public class MyServer {
         while (true) {
             System.out.println("Ждем подключения клиента");
             Socket socket = server.accept();
-            System.out.println("Клиент подключился");
+            System.out.println("Клиент подключился" + clients);
             new ClientHandler(socket);
         }
     }
@@ -54,6 +53,20 @@ public class MyServer {
     public synchronized void broadcastMsg(String msg) {
         for (ClientHandler clientHandler : clients) {
             clientHandler.sendMsg(msg);
+        }
+    }
+
+    public synchronized void privateMsg(String msg) {
+        System.out.println(msg);
+        String[] elements = msg.split(" ");
+        String key = elements[1];
+        String nickName = elements[2];
+
+        for (ClientHandler clientHandler : clients) {
+            if (clientHandler.getName().equals(nickName)) {
+                clientHandler.sendMsg(msg.replace(key,"").replace(nickName,"").trim());
+                break;
+            }
         }
     }
 
