@@ -57,9 +57,6 @@ public class MyServer {
     }
 
     public synchronized void privateMsg(ClientHandler sender, String receiver, String msg) {
-//        String[] elements = msg.split("\\s+", 3);
-//        String key = elements[1];
-//        String nickName = elements[2];
         String message = String.format("[ %s ] в личку [ %s ] : %s", sender.getName(), receiver, msg);
 
         for (ClientHandler clientHandler : clients) {
