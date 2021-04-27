@@ -23,6 +23,10 @@ public class AuthController {
         Socket socket = ServerConnection.getSocket();
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
+        addNewThread();
+    }
+
+    private void addNewThread() {
         new Thread(() -> {
             try {
                 while (true) {
