@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ClientHandler {
+    private long lastMsgTime;
     private MyServer server;
     private Socket socket;
     private DataInputStream in;
@@ -50,6 +51,15 @@ public class ClientHandler {
                 if (nick != null) {
                     if (confirmAuth(nick)) return;
                 } else {
+                    if (!server.isNickBusy(nick)) {
+                        sendMsg("/authok " + nick);
+                        name = "Инкогнито";
+                        server.broadcastMsg(name + " зашел в чат");
+                        server.subscribe(this);
+                        return;
+                    } else {
+                        sendMsg("Учетная запись уже используется");
+                    }
                     sendMsg("Неверные логин/пароль");
                 }
             } else {
@@ -89,15 +99,25 @@ public class ClientHandler {
     public void readMsg() throws IOException {
         while (true) {
             String strFromClient = in.readUTF();
-            System.out.println("от " + name + ": " + strFromClient);
-            if (strFromClient.equals("/end")) {
-                return;
+
+            if (lastMsgTime != 0 && System.currentTimeMillis() - lastMsgTime < 10000) {
+                server.privateMsg(this, getName(), "Незарегистрированным пользователям нельзя отправлять сообщение чаще, чем раз в 10 секунд");
+                continue;
             }
-            if (strFromClient.startsWith("/w")) {
-                String[] elements = strFromClient.split("\\s+", SIZE_OF_STRING_ARRAY);
-                server.privateMsg(this, elements[RECEIVER_INDEX], elements[MESSAGE_INDEX]);
-            } else
-                server.broadcastMsg(name + ": " + strFromClient);
+            lastMsgTime = System.currentTimeMillis();
+
+            System.out.println("от " + name + ": " + strFromClient);
+            if (strFromClient.startsWith("/")) {
+                if (strFromClient.equals("/end")) {
+                    return;
+                }
+                if (strFromClient.startsWith("/w")) {
+                    String[] elements = strFromClient.split("\\s+", SIZE_OF_STRING_ARRAY);
+                    server.privateMsg(this, elements[RECEIVER_INDEX], elements[MESSAGE_INDEX]);
+                }
+                continue;
+            }
+            server.broadcastMsg(name + ": " + strFromClient);
         }
     }
 

@@ -72,6 +72,14 @@ public class MyServer {
         sender.sendMsg("Ползователь " + receiver + " не найден.");
     }
 
+    public synchronized void broadcastClientList() {
+        StringBuilder sb = new StringBuilder("/clients");
+        for (ClientHandler client : clients) {
+            sb.append(" ").append(client.getName());
+        }
+        broadcastMsg(sb.toString());
+    }
+
     public synchronized boolean isNickBusy(String nick) {
         for (ClientHandler clientHandler : clients) {
             if (clientHandler.getName().equals(nick)) {
