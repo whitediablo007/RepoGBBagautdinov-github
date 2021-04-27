@@ -61,7 +61,7 @@ public class ChatController {
                     String strFromServer = inputStream.readUTF();
                     System.out.println("Считал " + strFromServer);
                     if (exitCondition(strFromServer)) break;
-                    textArea.setText(textArea.getText() + "Сервер: " + strFromServer + "\n");
+                    textArea.setText(textArea.getText() + strFromServer + "\n");
                 }
             } catch (Exception exception) {
                 exception.printStackTrace();
@@ -117,7 +117,7 @@ public class ChatController {
 
     @FXML
     private void textImport() {
-        textArea.appendText("Я: " + textField.getText().trim() + "\n");
+        //textArea.appendText("Я: " + textField.getText().trim() + "\n");
         try {
             outputStream.writeUTF(textField.getText().trim());
             textField.clear();
