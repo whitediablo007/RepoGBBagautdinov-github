@@ -11,7 +11,13 @@ public class ClientHandler {
     private DataInputStream in;
     private DataOutputStream out;
     private String name = "";
+
     private final String DELIMITER = " ";
+    private final int SIZE_OF_STRING_ARRAY = 3;
+    private final int RECEIVER_INDEX = 1;
+    private final int LOGIN_INDEX = 1;
+    private final int MESSAGE_INDEX = 2;
+    private final int PASS_INDEX = 2;
 
 
     public ClientHandler(Socket socket) throws IOException {
@@ -54,8 +60,8 @@ public class ClientHandler {
 
     private String getAuthData(String str) {
         String[] parts = str.split(DELIMITER);
-        String login = parts[1];
-        String password = parts[2];
+        String login = parts[LOGIN_INDEX];
+        String password = parts[PASS_INDEX];
         return server.getAuthService().getNickByLoginPass(login, password);
     }
 
@@ -88,8 +94,8 @@ public class ClientHandler {
                 return;
             }
             if (strFromClient.startsWith("/w")) {
-                String[] elements = strFromClient.split("\\s+", 3);
-                server.privateMsg(this, elements[1], elements[2]);
+                String[] elements = strFromClient.split("\\s+", SIZE_OF_STRING_ARRAY);
+                server.privateMsg(this, elements[RECEIVER_INDEX], elements[MESSAGE_INDEX]);
             } else
                 server.broadcastMsg(name + ": " + strFromClient);
         }
