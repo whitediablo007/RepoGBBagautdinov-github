@@ -1,10 +1,15 @@
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.DataInputStream;
@@ -13,9 +18,6 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class ChatController {
-    private boolean readyOfRead = true;
-    private final String SERVER_IP = "localhost";
-    private final int SERVER_PORT = 8112;
 
     private Socket socket;
     private DataInputStream inputStream;
@@ -28,6 +30,8 @@ public class ChatController {
     @FXML
     private void initialize() throws IOException {
         try {
+            openLoginWindow();
+            Main.mainStage.setTitle(Main.mainStage.getTitle() + "(" + Config.nick + ")");
             openConnection();
             addCloseListener();
         } catch (IOException exception) {
@@ -35,6 +39,15 @@ public class ChatController {
             exception.printStackTrace();
             throw exception;
         }
+    }
+
+    private void openLoginWindow() throws IOException {
+        Parent root = FXMLLoader.load(ClassLoader.getSystemResource("auth.fxml"));
+        Stage loginStage = new Stage();
+        loginStage.initModality(Modality.APPLICATION_MODAL);
+        loginStage.setScene(new Scene(root));
+        loginStage.setTitle("Вход");
+        loginStage.showAndWait();
     }
 
     private void connectionAlertWindow() {
@@ -46,7 +59,7 @@ public class ChatController {
     }
 
     private void openConnection() throws IOException {
-        socket = new Socket(SERVER_IP, SERVER_PORT);
+        socket = ServerConnection.getSocket();
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
 
@@ -56,7 +69,7 @@ public class ChatController {
     private void addNewThread() {
         new Thread(() -> {
             try {
-                while (readyOfRead) {
+                while (socket.isConnected()) {
                     System.out.println("Готовы считывать");
                     String strFromServer = inputStream.readUTF();
                     System.out.println("Считал " + strFromServer);
@@ -65,6 +78,14 @@ public class ChatController {
                 }
             } catch (Exception exception) {
                 exception.printStackTrace();
+            } finally {
+                try {
+                    inputStream.close();
+                    outputStream.close();
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }).start();
     }
@@ -91,7 +112,6 @@ public class ChatController {
 
     private void closeConnection() {
         try {
-            readyOfRead = false;
             outputStream.writeUTF("/end");
             socket.close();
             outputStream.close();
@@ -117,7 +137,7 @@ public class ChatController {
 
     @FXML
     private void textImport() {
-        textArea.appendText("Я: " + textField.getText().trim() + "\n");
+        //textArea.appendText("Я: " + textField.getText().trim() + "\n");
         try {
             outputStream.writeUTF(textField.getText().trim());
             textField.clear();

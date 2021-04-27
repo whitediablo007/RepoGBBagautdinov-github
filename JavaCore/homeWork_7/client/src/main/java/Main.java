@@ -12,9 +12,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         mainStage = primaryStage;
-
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("chatGUI.fxml")));
         primaryStage.setTitle("Сетевой чат 1.0.1");
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("chatGUI.fxml")));
         primaryStage.setScene(new Scene(root, 350, 700));
         primaryStage.show();
     }
