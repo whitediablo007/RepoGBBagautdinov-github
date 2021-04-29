@@ -62,7 +62,6 @@ public class ChatController {
         socket = ServerConnection.getSocket();
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
-
         addNewThread();
     }
 
@@ -81,20 +80,14 @@ public class ChatController {
             } catch (Exception exception) {
                 //exception.printStackTrace();
             } finally {
-                try {
-                    inputStream.close();
-                    outputStream.close();
-                    socket.close();
-                } catch (IOException e) {
-                    //e.printStackTrace();
-                }
+                closeConnection();
             }
         }).start();
     }
 
     private boolean exitCondition(String strFromServer) {
         if (strFromServer.equalsIgnoreCase("/end")) {
-            System.out.println("Сервер остановлен");
+            System.out.println("Клиент отключен от сервера");
             return true;
         }
         return false;
@@ -113,7 +106,6 @@ public class ChatController {
 
     private void closeConnection() {
         try {
-            outputStream.writeUTF("/end");
             inputStream.close();
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -128,7 +120,6 @@ public class ChatController {
         } catch (IOException exception) {
             exception.printStackTrace();
         }
-        System.exit(0);
     }
 
     @FXML

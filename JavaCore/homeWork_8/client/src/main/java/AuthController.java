@@ -8,6 +8,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
 public class AuthController {
     @FXML
@@ -17,10 +18,12 @@ public class AuthController {
 
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
+    Socket socket;
+
 
     @FXML
     private void initialize() throws IOException {
-        Socket socket = ServerConnection.getSocket();
+        socket = ServerConnection.getSocket();
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
         addNewThread();
@@ -37,6 +40,7 @@ public class AuthController {
                         Platform.runLater(() -> {
                             Stage stage = (Stage) loginTF.getScene().getWindow();
                             stage.close();
+
                         });
                         break;
                     }
