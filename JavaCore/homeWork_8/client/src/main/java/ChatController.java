@@ -73,18 +73,20 @@ public class ChatController {
                     System.out.println("Готовы считывать");
                     String strFromServer = inputStream.readUTF();
                     System.out.println("Считал " + strFromServer);
-                    if (exitCondition(strFromServer)) break;
+                    if (exitCondition(strFromServer)) {
+                        return;
+                    }
                     textArea.setText(textArea.getText() + strFromServer + "\n");
                 }
             } catch (Exception exception) {
-                exception.printStackTrace();
+                //exception.printStackTrace();
             } finally {
                 try {
                     inputStream.close();
                     outputStream.close();
                     socket.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                 }
             }
         }).start();
@@ -93,7 +95,6 @@ public class ChatController {
     private boolean exitCondition(String strFromServer) {
         if (strFromServer.equalsIgnoreCase("/end")) {
             System.out.println("Сервер остановлен");
-            System.exit(0);
             return true;
         }
         return false;
@@ -113,12 +114,21 @@ public class ChatController {
     private void closeConnection() {
         try {
             outputStream.writeUTF("/end");
-            socket.close();
-            outputStream.close();
             inputStream.close();
         } catch (IOException exception) {
             exception.printStackTrace();
         }
+        try {
+            outputStream.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        try {
+            socket.close();
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+        System.exit(0);
     }
 
     @FXML
@@ -143,7 +153,7 @@ public class ChatController {
             textField.clear();
             textField.requestFocus();
         } catch (IOException exception) {
-            exception.printStackTrace();
+            //exception.printStackTrace();
             sendMessageAlertWindow(exception);
         }
     }

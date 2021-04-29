@@ -1,9 +1,13 @@
 package geekbrains.study;
 
+import javafx.scene.control.Alert;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 
 public class ClientHandler {
     private long lastMsgTime;
@@ -30,10 +34,15 @@ public class ClientHandler {
     }
 
     private void addNewThread() {
+
         new Thread(() -> {
             try {
+                socket.setSoTimeout(120000);
                 auth();
                 readMsg();
+            } catch (SocketTimeoutException e) {
+                sendMsg("/end");
+                e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             } finally {
@@ -75,12 +84,13 @@ public class ClientHandler {
         return server.getAuthService().getNickByLoginPass(login, password);
     }
 
-    private boolean confirmAuth(String nick) {
+    private boolean confirmAuth(String nick) throws SocketException {
         if (!server.isNickBusy(nick)) {
             sendMsg("/authok " + nick);
             name = nick;
             server.broadcastMsg(name + " зашел в чат");
             server.subscribe(this);
+            socket.setSoTimeout(0);
             return true;
         } else {
             sendMsg("Учетная запись уже используется");
@@ -100,7 +110,7 @@ public class ClientHandler {
         while (true) {
             String strFromClient = in.readUTF();
 
-            if (lastMsgTime != 0 && System.currentTimeMillis() - lastMsgTime < 10000) {
+            if (server.isNickUnAuth() && lastMsgTime != 0 && System.currentTimeMillis() - lastMsgTime < 10000) {
                 server.privateMsg(this, getName(), "Незарегистрированным пользователям нельзя отправлять сообщение чаще, чем раз в 10 секунд");
                 continue;
             }
@@ -109,12 +119,18 @@ public class ClientHandler {
             System.out.println("от " + name + ": " + strFromClient);
             if (strFromClient.startsWith("/")) {
                 if (strFromClient.equals("/end")) {
+                    System.out.println(name + " отключился от сервера.");
                     return;
                 }
                 if (strFromClient.startsWith("/w")) {
                     String[] elements = strFromClient.split("\\s+", SIZE_OF_STRING_ARRAY);
-                    server.privateMsg(this, elements[RECEIVER_INDEX], elements[MESSAGE_INDEX]);
-                }
+                    if (elements.length >= SIZE_OF_STRING_ARRAY && elements[0].equals("/w")) {
+                        server.privateMsg(this, elements[RECEIVER_INDEX], elements[MESSAGE_INDEX]);
+                    } else {
+                        sendMsg("Неверный формат служебной команды отправки приватного сообщения");
+                        sendMsg("[ " + strFromClient + " ]");
+                    }
+                } else sendMsg("Неверный формат служебной команды");
                 continue;
             }
             server.broadcastMsg(name + ": " + strFromClient);
@@ -139,6 +155,8 @@ public class ClientHandler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        System.exit(0);
     }
 
     public String getName() {
