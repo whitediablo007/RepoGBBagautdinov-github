@@ -1,0 +1,9 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../:\GeekBrains\RepoGBBagautdinov\Java3\homeWork_1\.idea/dataSources/
+/../../../../../../:\GeekBrains\RepoGBBagautdinov\Java3\homeWork_1\out
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/
