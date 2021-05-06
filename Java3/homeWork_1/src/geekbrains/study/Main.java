@@ -3,8 +3,6 @@ package geekbrains.study;
 import geekbrains.study.allFruits.Apple;
 import geekbrains.study.allFruits.Orange;
 
-import java.util.*;
-
 public class Main {
     static final int NUMBER_OF_FRUITS = 5;
 
