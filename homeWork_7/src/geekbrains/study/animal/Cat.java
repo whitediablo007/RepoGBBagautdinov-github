@@ -24,7 +24,7 @@ public class Cat {
     }
 
     public int getAppetite() {
-        return appetite;
+        return appetite;w
     }
 
     public void eat(Plate dose) {
