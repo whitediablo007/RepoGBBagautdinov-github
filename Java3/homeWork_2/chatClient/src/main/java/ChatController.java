@@ -147,6 +147,7 @@ public class ChatController {
             //exception.printStackTrace();
             sendMessageAlertWindow(exception);
         }
+
     }
 
     private void sendMessageAlertWindow(IOException exception) {

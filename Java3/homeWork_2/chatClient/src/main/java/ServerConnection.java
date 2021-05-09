@@ -11,6 +11,7 @@ public class ServerConnection {
             socket = new Socket(SERVER_IP, SERVER_PORT);
         }
         return socket;
+
     }
 
 }

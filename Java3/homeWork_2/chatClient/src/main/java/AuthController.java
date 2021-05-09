@@ -42,6 +42,7 @@ public class AuthController {
 
                         });
                         break;
+
                     }
                 }
             } catch (Exception e) {

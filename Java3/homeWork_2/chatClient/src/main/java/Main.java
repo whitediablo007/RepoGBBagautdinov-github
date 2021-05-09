@@ -16,5 +16,6 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("chatGUI.fxml")));
         primaryStage.setScene(new Scene(root, 350, 700));
         primaryStage.show();
+
     }
 }
