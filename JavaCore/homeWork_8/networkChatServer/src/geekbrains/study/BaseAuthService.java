@@ -25,6 +25,6 @@ public class BaseAuthService implements AuthService {
 
     @Override
     public void stop() {
-        System.out.println("Сервис остановился");
+        System.out.println("Сервис остановлен");
     }
 }

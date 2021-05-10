@@ -1,6 +1,9 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+/compiler.xml
+/modules.xml
+/misc.xml
 # Datasource local storage ignored files
 /../../../../../../:\GeekBrains\RepoGBBagautdinov\Java3\homeWork_1.1\.idea/dataSources/
 /dataSources.local.xml
