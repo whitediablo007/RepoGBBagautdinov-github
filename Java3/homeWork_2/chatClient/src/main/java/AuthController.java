@@ -51,6 +51,8 @@ public class AuthController {
         }).start();
     }
 
+
+
     @FXML
     private void auth() throws IOException {
         String authString = "/auth " + loginTF.getText() + " " + passwordTF.getText();
